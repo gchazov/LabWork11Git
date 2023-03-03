@@ -46,6 +46,7 @@ namespace LabWork11
         //рекомендации по использованию приложения для пользователя
         public static void UserRecomendations()
         {
+            Dialog.PrintHeader("Важная информация для пользователя");
             Console.WriteLine("Для удобства использования программы, пожалуйста, установите полноэкранный режим консоли!\n\n" +
                 "=> Alt + Enter для Windows\n" +
                 "=> Control + Command + F для MacOS\n");

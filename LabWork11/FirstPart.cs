@@ -13,7 +13,7 @@ namespace LabWork11
          * удобство в том, что при её изменении не придётся
          * изменять значения в каждом методе программы
          */
-        public const int MAX_CAPACITY = 1000;
+        public const int MAX_CAPACITY = 100;
 
         //печать основного меню первой части работа
         public static void FPMainPage() //здесь и далее: FP - сокращение First Part
@@ -161,8 +161,16 @@ namespace LabWork11
                 return;
             }
             Console.WriteLine($"Очередь состоит из {animals.Count} следующего(-их) элемента(-ов):\n");
+            //чтобы пользователь успел прочитать сообщение выше
             if (animals.Count >= 40)
-                Thread.Sleep(2000); //чтобы пользователь успел прочитать сообщение выше
+            {
+                Console.WriteLine("Вывод объектов через...");
+                for (int i = 0; i <= 2; i++)
+                {
+                    Console.WriteLine(i+1);
+                    Thread.Sleep(1000);
+                }
+            }
             int elementNumber = 0;
             foreach(Animal animal in animals) //перебор объектов очереди
             {

@@ -114,12 +114,25 @@ namespace AnimalLibrary
             } while (!isParsed);
             return result;
         }
-        
+
+        //для красивого заголовка
+        public static string PrintSpace(int amount)
+        {
+            string str = "";
+            for (int i = 0; i < amount; i++)
+            {
+                str += " ";
+            }
+            return str;
+        }
+
         //печать красивого заголовка
         public static void PrintHeader(string header)
         {
             Console.Clear();
-            ColorText("_________/" + header.ToUpper() + @"\_________" + "\n", "cyan");
+            ColorText(@"<>=========\" + PrintSpace(header.Length+2) + @"/=========<>", "cyan");
+            ColorText("<>==========|" + header.ToUpper() + "|==========<>", "cyan");
+            ColorText(@"<>=========/" + PrintSpace(header.Length+2) + @"\=========<>" + "\n", "cyan");
         }
 
         //печать цветного текста

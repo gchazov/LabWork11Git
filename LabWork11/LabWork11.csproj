@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <Reference Include="AnimalLibrary">
-      <HintPath>..\..\Лабораторная работа №10\AnimalLibrary\bin\Debug\net6.0\AnimalLibrary.dll</HintPath>
+      <HintPath>..\AnimalLibrary\bin\Debug\net6.0\AnimalLibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
 

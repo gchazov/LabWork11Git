@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\cheyz\\Desktop\\Домашка\\Программирование\\Лабораторная работа №11\\LabWork11\\LabWork11.csproj",
+      "projectUniqueName": "C:\\Users\\cheyz\\Desktop\\Домашка\\Программирование\\Лабораторная работа №11\\LabWork11Git\\LabWork11\\LabWork11.csproj",
       "projectName": "LabWork11",
-      "projectPath": "C:\\Users\\cheyz\\Desktop\\Домашка\\Программирование\\Лабораторная работа №11\\LabWork11\\LabWork11.csproj",
+      "projectPath": "C:\\Users\\cheyz\\Desktop\\Домашка\\Программирование\\Лабораторная работа №11\\LabWork11Git\\LabWork11\\LabWork11.csproj",
       "packagesPath": "C:\\Users\\cheyz\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\cheyz\\Desktop\\Домашка\\Программирование\\Лабораторная работа №11\\LabWork11\\obj\\",
+      "outputPath": "C:\\Users\\cheyz\\Desktop\\Домашка\\Программирование\\Лабораторная работа №11\\LabWork11Git\\LabWork11\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\cheyz\\AppData\\Roaming\\NuGet\\NuGet.Config",
