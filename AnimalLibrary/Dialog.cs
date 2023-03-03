@@ -94,7 +94,7 @@ namespace AnimalLibrary
                             isParsed = true;
                             break;
                         case "нет":
-                            result = true;
+                            result = false;
                             isParsed = true;
                             break;
                         case "yes":
@@ -102,7 +102,7 @@ namespace AnimalLibrary
                             isParsed = true;
                             break;
                         case "no":
-                            result = true;
+                            result = false;
                             isParsed = true;
                             break;
                         default:
@@ -130,9 +130,7 @@ namespace AnimalLibrary
         public static void PrintHeader(string header)
         {
             Console.Clear();
-            ColorText(@"<>=========\" + PrintSpace(header.Length+2) + @"/=========<>", "cyan");
-            ColorText("<>==========|" + header.ToUpper() + "|==========<>", "cyan");
-            ColorText(@"<>=========/" + PrintSpace(header.Length+2) + @"\=========<>" + "\n", "cyan");
+            ColorText("__________/" + header.ToUpper() + @"\__________" + "\n", "cyan");
         }
 
         //печать цветного текста

@@ -1,4 +1,6 @@
-﻿namespace AnimalLibrary
+﻿using System;
+
+namespace AnimalLibrary
 {
     public class Animal: IInit, IShow, IComparable, ICloneable
     {
@@ -14,18 +16,22 @@
         protected string[] habitatArray = { "Евразия", "Африка", "Австралия", "Южная Америка", "Антарктида", "Северная Америка" };
         protected string[] animalArray = { "Комар", "Карась", "Ондатра", "Крокодил", "Щука", "Таракан", "Ящерица", "Лягушка", "Тарантул"};
 
-        /// <summary>
-        /// конструктор с параметрами и значениями по умолчанию
-        /// </summary>
-        /// <param name="name">название животного</param>
-        /// <param name="age">возраст</param>
-        /// <param name="habitat">естественное место обитания</param>
+        //конструктор с параметрами по умолчанию
         public Animal(string name = "NoName", int age = 1, string habitat = "NoHabitat", int num = 0)
         {
             Name = name;
             Age = age;
             Habitat = habitat;
             id = new AnimalId(num);
+        }
+
+        //конструктор без параметров
+        public Animal()
+        {
+            Name = "NoName";
+            Age = 1;
+            Habitat = "NoHabitat";
+            id = new AnimalId(0);
         }
 
         //свойство названия живности
