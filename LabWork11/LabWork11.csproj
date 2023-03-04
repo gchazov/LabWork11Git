@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="AnimalLibrary">
       <HintPath>..\AnimalLibrary\bin\Debug\net6.0\AnimalLibrary.dll</HintPath>
     </Reference>

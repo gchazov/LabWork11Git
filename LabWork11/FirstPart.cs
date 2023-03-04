@@ -28,7 +28,7 @@ namespace LabWork11
                 "6. Самое старшее животное очереди\n" +
                 "7. Найти элемент в очереди\n" +
                 "8. Выполнить клонирование очереди\n\n" +
-                "9. Вернуться в главное меню");
+                "9. Вернуться в главное меню\n");
 
         }
 
@@ -105,44 +105,13 @@ namespace LabWork11
         }
 
         
-        //добавление n-ого количества элементов в конец очереди
-        public static void AddRandomToQueue(ref Queue<Animal> animalQueue, int amount)
-        {
-            for (int i = 0; i < amount; i++)
-            {
-                switch (Program.random.Next(1, 5))
-                {
-                    case 1:
-                        var animal = new Animal();
-                        animal.RandomInit();
-                        animalQueue.Enqueue(animal);
-                        break;
-                    case 2:
-                        var bird = new Bird();
-                        bird.RandomInit();
-                        animalQueue.Enqueue(bird);
-                        break;
-                    case 3:
-                        var mammal = new Mammal();
-                        mammal.RandomInit();
-                        animalQueue.Enqueue(mammal);
-                        break;
-                    case 4:
-                        var artiodactyl = new Artiodactyl();
-                        artiodactyl.RandomInit();
-                        animalQueue.Enqueue(artiodactyl);
-                        break;
-                }
-            }
-        }
-
         //создание очереди из элементов коллекции с помощью ДСЧ
         public static void MakeQueueRandom(ref Queue<Animal> animals)
         {
             Dialog.PrintHeader("Создание очереди с помощью ДСЧ");
             int length = Dialog.EnterNumber($"Введите длину очереди (до {MAX_CAPACITY}):", 0, MAX_CAPACITY);
             Queue<Animal> animalQueue = new Queue<Animal>(length); //создание очереди заданной длины
-            AddRandomToQueue(ref animalQueue, length);
+            FPMethods.AddRandomToQueue(ref animalQueue, length);
 
             //обновляем инициализированную очередь
             animals = new Queue<Animal>(animalQueue);
@@ -250,7 +219,7 @@ namespace LabWork11
                     Dialog.ColorText("Очередь осталась прежней, элементов не прибавилось", "green");
                     break;
                 default:
-                    AddRandomToQueue(ref animals, elementAmount);
+                    FPMethods.AddRandomToQueue(ref animals, elementAmount);
                     Dialog.ColorText($"Очередь пополнилась на {elementAmount} элемент(-ов)", "green");
                     Console.WriteLine("Для просмотра изменений, выведите очередь на экран (пункт 2)");
                     break;
@@ -271,27 +240,40 @@ namespace LabWork11
                 return;
             }
 
-            Console.WriteLine("1. Птицы (Bird)\n" +
-                "2. Млекопитающие (Mammal)\n" +
-                "3. Парнокопытные (Artiodactyl)\n");
-            int choice = Dialog.EnterNumber("Выберите один из типов:", 1, 3);
-
-            Dialog.PrintHeader("Объекты определённого типа");
-            List<Animal> res = Requests.GetTypeRequest(choice, animals);
-            switch (res.Count)
+            bool isRunning = true;
+            do
             {
-                case 0:
-                    Console.WriteLine("В очереди нет объектов выбранного типа");
+                Dialog.PrintHeader("Объекты определённого типа");
+                Console.WriteLine("1. Млекопитающие (Mammal)\n" +
+                    "2. Птицы (Bird)\n" +
+                    "3. Парнокопытные (Artiodactyl)\n" +
+                    "4. Назад\n");
+                int choice = Dialog.EnterNumber("Выберите один из типов:", 1, 4);
+
+                if (choice == 4)
+                {
+                    //выход из меню
+                    isRunning = false;
                     break;
-                default:
-                    Dialog.ColorText($"В очереди найдено {res.Count} подходящих элементов:\n", "green");
-                    foreach(Animal animal in res) //перебор в списке
-                    {
-                        animal.Show();
-                    }
-                    break;
-            }
-            Dialog.BackMessage();
+                }
+
+                Dialog.PrintHeader("Объекты определённого типа");
+                List<Animal> res = FPMethods.GetTypeRequest(choice, animals);
+                switch (res.Count)
+                {
+                    case 0:
+                        Console.WriteLine("В очереди нет объектов выбранного типа");
+                        break;
+                    default:
+                        Dialog.ColorText($"В очереди найден(-о) {res.Count} подходящий(-их) элемент(-ов):\n", "green");
+                        foreach (Animal animal in res) //перебор в списке
+                        {
+                            animal.Show();
+                        }
+                        break;
+                }
+                Dialog.BackMessage();
+            } while (isRunning);
             return;
 
         }
@@ -309,7 +291,7 @@ namespace LabWork11
             }
 
             Dialog.PrintHeader("Объекты определённого типа");
-            Animal animal = Requests.OldestAnimal(animals);
+            Animal animal = FPMethods.OldestAnimal(animals);
             Console.WriteLine("Животное с наибольшим возрастом в очереди:");
             animal.Show();
             Dialog.BackMessage();
@@ -327,50 +309,63 @@ namespace LabWork11
                 return;
             }
 
-            Dialog.PrintHeader("поиск объекта в очереди");
-            var animalFind = new Animal();
-            Console.WriteLine("1. Млекопитающее\n" +
-                "2. Птица\n" +
-                "3. Парнокопытное\n");
-            int choice = Dialog.EnterNumber("Выберите тип объекта, который будет найден:", 1, 3);
-            switch (choice)
-            { //определение типа
-                case 1:
-                    animalFind = new Mammal();
-                    break;
-                case 2:
-                    animalFind = new Bird();
-                    break;
-                case 3:
-                    animalFind = new Artiodactyl();
-                    break;
-            }
-
-            Console.WriteLine();
-            animalFind.Init(); //инициализация с клавиатуры
-
-            bool exist = false;
-
-            foreach(Animal animal in animals)
+            bool isRunning = true;
+            do
             {
-                if (animal.Equals(animalFind))
+                Dialog.PrintHeader("поиск объекта в очереди");
+                var animalFind = new Animal();
+                Console.WriteLine("1. Млекопитающее (Mammal)\n" +
+                    "2. Птица (Bird)\n" +
+                    "3. Парнокопытное (Artiodactyl)\n" +
+                    "4. Назад\n");
+                int choice = Dialog.EnterNumber("Выберите тип объекта, который будет найден:", 1, 4);
+
+                if (choice == 4)
                 {
-                    exist = true;
-                    break;
+                    //возврат в предыдущее меню
+                    isRunning = false;
+                    return;
                 }
-            }
 
-            if (!exist)
-            {
-                Dialog.ColorText("Заданного элемента в массиве нет");
+                switch (choice)
+                { //определение типа
+                    case 1:
+                        animalFind = new Mammal();
+                        break;
+                    case 2:
+                        animalFind = new Bird();
+                        break;
+                    case 3:
+                        animalFind = new Artiodactyl();
+                        break;
+                }
+
+                Console.WriteLine();
+                animalFind.Init(); //инициализация с клавиатуры
+
+                bool exist = false;
+
+                foreach (Animal animal in animals)
+                {
+                    if (animal.Equals(animalFind))
+                    {
+                        exist = true;
+                        break;
+                    }
+                }
+
+                if (!exist)
+                {
+                    Dialog.ColorText("Заданного элемента в массиве нет");
+                    Dialog.BackMessage();
+                    return;
+                }
+
+                Dialog.ColorText("\nЗаданный элемент есть в очереди:\n", "green");
+                animalFind.Show();
                 Dialog.BackMessage();
                 return;
-            }
-
-            Dialog.ColorText("\nЗаданный элемент есть в очереди:\n", "green");
-            animalFind.Show();
-            Dialog.BackMessage();
-            return;
+            } while (isRunning);
         }
 
         //создание клона очереди и демонстрация работы
@@ -385,7 +380,7 @@ namespace LabWork11
             }
 
             //глубокое копирование исходной очереди
-            Queue<Animal> clone = new Queue<Animal>(animals);
+            Queue<Animal> clone = FPMethods.CloneQueue(animals);
             Dialog.ColorText("Очередь-клон успешно создана", "green");
             Console.WriteLine("Для демонстрации работы клонирования, извлечём элемент из исходной очереди");
 

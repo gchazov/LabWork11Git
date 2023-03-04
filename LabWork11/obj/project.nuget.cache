@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "lqBb9luCImtpzi8HBVTRYOHA0r5yx8koFUzewZJyw2IjSHFERNmVe4y1E7M86z/KhMZ6ceEoW6uDwMZ3FBqRHg==",
+  "dgSpecHash": "+urCawy6hezZbRGx7eyA39QV8Zll4+gWLCF0+4/F4AOt5TwTkvX93nT9Qv5sAZcm2GezHkJUqnq5vzcyicSDMQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\cheyz\\Desktop\\Домашка\\Программирование\\Лабораторная работа №11\\LabWork11Git\\LabWork11\\LabWork11.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\cheyz\\.nuget\\packages\\mstest.testframework\\3.0.2\\mstest.testframework.3.0.2.nupkg.sha512"
+  ],
   "logs": []
 }
