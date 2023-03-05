@@ -123,14 +123,7 @@ namespace MethodTesting
         public void TestClearQueue() //тест очистки словаря
         {
             SortedDictionary<int, Animal> animals = new();
-            Mammal m1 = new("rabbit", 1, "selo Kapustino", true, 1);
-            Bird b1 = new("перепел", 3, "кого он перепел?", true, 2);
-            Artiodactyl a1 = new("goat", 19, "гора", true, "cool", 3);
-            //добавляем 
-            animals.Add(1, m1);
-            animals.Add(2, b1);
-            animals.Add(3, a1);
-
+            SPMethods.AddRandomToDict(ref animals, 500);
             SPMethods.ClearDict(ref animals);
             SortedDictionary<int, Animal> actual = SPMethods.CloneDict(animals);
             Assert.AreEqual(0, animals.Count);
