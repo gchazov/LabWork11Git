@@ -43,6 +43,11 @@ namespace AnimalLibrary
                 {
                     ColorText("Введённое значение имеет неверный формат данных! Попробуйте ещё раз...");
                 }
+
+                catch (ArgumentNullException)
+                {
+                    ColorText("Введённая строка не может быть нулевой! Попробуйте ещё раз...");
+                }
             } while (!isParsed);
             return number;
         }

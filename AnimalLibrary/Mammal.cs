@@ -33,8 +33,8 @@ namespace AnimalLibrary
         /// <param name="age">возраст животного</param>
         /// <param name="habitat">естественное место обитания</param>
         /// <param name="isWoolen">покрытие шерстью</param>
-        public Mammal(string name, int age, string habitat, bool isWoolen)
-            : base(name, age, habitat)
+        public Mammal(string name, int age, string habitat, bool isWoolen, int num)
+            : base(name, age, habitat, num)
         {
             IsWoolen = isWoolen;
         }
@@ -48,10 +48,10 @@ namespace AnimalLibrary
         public override void RandomInit()
         {
             Name = mammalArray[random.Next(mammalArray.Length)];
-            Age = random.Next(1, 20);
+            Age = random.Next(1, 21);
             Habitat = habitatArray[random.Next(habitatArray.Length)];
             IsWoolen = Convert.ToBoolean(random.Next(0, 2));
-            id.number = random.Next(0, 1000);
+            id.number = random.Next(1, 5001);
         }
 
 
@@ -74,6 +74,18 @@ namespace AnimalLibrary
         public override void Show()
         {
             Console.WriteLine($"Млекопитающее: {Name}; Возраст: {Age}; Ареал обитания: {Habitat}; Покрыто шерстью: {isWoolen}; ID в зоопарке: {id}");
+        }
+
+        //метод поверхностного копирования
+        public override object ShallowCopy()
+        {
+            return this.MemberwiseClone();
+        }
+
+        //метод глубокого копирования
+        public override object Clone()
+        {
+            return new Mammal(Name, Age, Habitat, IsWoolen, id.number);
         }
     }
 }

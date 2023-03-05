@@ -102,7 +102,7 @@ namespace AnimalLibrary
             Name = Dialog.EnterString("Введите название животного:", true);
             Age = Dialog.EnterNumber("Введите возраст:", 1, 20);
             Habitat = Dialog.EnterString("Введите ареал обитания:", true);
-            id.number = Dialog.EnterNumber("Введите ID: ", 0, 1000);
+            id.number = Dialog.EnterNumber("Введите ID (до 5000): ", 1, 5000);
         }
 
         //генерация объекта с помощью ДСЧ
@@ -110,9 +110,9 @@ namespace AnimalLibrary
         {
   
             Name = animalArray[random.Next(animalArray.Length)];
-            Age = random.Next(1, 20);
+            Age = random.Next(1, 21);
             Habitat = habitatArray[random.Next(habitatArray.Length)];
-            id.number = random.Next(0, 1000);
+            id.number = random.Next(0, 5001);
         }
 
         //переопределение вирт. метода Equals
@@ -129,13 +129,13 @@ namespace AnimalLibrary
         }
 
         //метод поверхностного копирования
-        public object ShallowCopy()
+        public virtual object ShallowCopy()
         {
             return this.MemberwiseClone();
         }
 
         //метод глубокого копирования
-        public object Clone()
+        public virtual object Clone()
         {
             return new Animal(Name, Age, Habitat, id.number);
         }

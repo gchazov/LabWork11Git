@@ -36,8 +36,8 @@ namespace AnimalLibrary
         /// <param name="isWoolen">покрытие шерстью</param>
         /// <param name="hornStyle">вид рогов</param>
         public Artiodactyl(string name, int age, string habitat,
-            bool isWoolen, string hornStyle)
-            : base(name, age, habitat, isWoolen)
+            bool isWoolen, string hornStyle, int num)
+            : base(name, age, habitat, isWoolen, num)
         {
             HornStyle = hornStyle;
         }
@@ -52,11 +52,11 @@ namespace AnimalLibrary
         public override void RandomInit()
         {
             Name = artiArray[random.Next(artiArray.Length)];
-            Age = random.Next(1, 20);
+            Age = random.Next(1, 21);
             Habitat = habitatArray[random.Next(habitatArray.Length)];
             IsWoolen = Convert.ToBoolean(random.Next(0, 2));
             HornStyle = hornStyles[random.Next(hornStyles.Length)];
-            id.number = random.Next(0, 1000);
+            id.number = random.Next(1, 5001);
         }
 
         public override bool Equals(object obj)
@@ -82,6 +82,18 @@ namespace AnimalLibrary
         {
             Console.WriteLine($"Парнокопытное: {Name}; Возраст: {Age}; " +
                 $"Ареал обитания: {Habitat}; Покрыто шерстью: {isWoolen}; Вид рогов: {HornStyle}; ID в зоопарке: {id}");
+        }
+
+        //метод поверхностного копирования
+        public override object ShallowCopy()
+        {
+            return this.MemberwiseClone();
+        }
+
+        //метод глубокого копирования
+        public override object Clone()
+        {
+            return new Artiodactyl(Name, Age, Habitat, IsWoolen, HornStyle, id.number);
         }
     }
 }

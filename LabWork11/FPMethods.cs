@@ -97,8 +97,20 @@ namespace LabWork11
         //создание очереди-клона
         public static Queue<Animal> CloneQueue(Queue<Animal> animals)
         {
-            //возврат глубокой копии очереди
-            return new Queue<Animal>(animals);
+            Queue<Animal> clone = new();
+            foreach(Animal animal in animals)
+            {
+                var cloneObj = animal.Clone();
+                clone.Enqueue((Animal)cloneObj);
+            }
+
+            return clone;
+        }
+
+        //очистка очереди
+        public static void ClearQueue(ref Queue<Animal> animals)
+        {
+            animals.Clear();
         }
 
     }

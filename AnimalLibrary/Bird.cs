@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace AnimalLibrary
 {
     //класс Bird наследуемый от суперкласса Animal
-    public class Bird : Animal
+    public class Bird : Animal, ICloneable
     {
         protected bool flyAbility;
         protected string[] birdArray = { "Воробей", "Страус", "Пеликан", "Индюк",
@@ -31,8 +31,8 @@ namespace AnimalLibrary
         /// <param name="age">возраст</param>
         /// <param name="habitat">место обитания</param>
         /// <param name="flyAbility">умение летать</param>
-        public Bird(string name, int age, string habitat, bool flyAbility)
-            : base(name, age, habitat)
+        public Bird(string name, int age, string habitat, bool flyAbility, int num)
+            : base(name, age, habitat, num)
         {
             FlyAbility = flyAbility;
         }
@@ -53,7 +53,7 @@ namespace AnimalLibrary
             Age = random.Next(1, 20);
             Habitat = habitatArray[random.Next(habitatArray.Length)];
             FlyAbility = Convert.ToBoolean(random.Next(0, 2));
-            id.number = random.Next(0, 1000);
+            id.number = random.Next(1, 5001);
         }
 
 
@@ -77,6 +77,18 @@ namespace AnimalLibrary
         public override void Show()
         {
             Console.WriteLine($"Птица: {Name}; Возраст: {Age}; Ареал обитания: {Habitat}; Умение летать: {FlyAbility}; ID в зоопарке: {id}");
+        }
+
+        //метод поверхностного копирования
+        public override object ShallowCopy()
+        {
+            return this.MemberwiseClone();
+        }
+
+        //метод глубокого копирования
+        public override object Clone()
+        {
+            return new Bird(Name, Age, Habitat, FlyAbility, id.number);
         }
     }
 }

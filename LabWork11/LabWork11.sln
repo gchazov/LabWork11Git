@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabWork11", "LabWork11.cspr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnimalLibrary", "..\AnimalLibrary\AnimalLibrary.csproj", "{0BAA5207-8A5E-47CF-881A-CBA42F946399}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTesting", "..\FPTesting\UnitTesting.csproj", "{751F6A44-43EF-47F3-AA2B-E1627E97AEB0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTesting", "..\UnitTesting\UnitTesting.csproj", "{751F6A44-43EF-47F3-AA2B-E1627E97AEB0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

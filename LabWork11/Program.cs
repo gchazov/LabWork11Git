@@ -12,14 +12,14 @@ namespace LabWork11
         //печать основного меню программы на экран
         static void MainPage()
         {
-            Console.WriteLine("1. Первая часть работы (коллекция Queue<>)\n" +
-                    "2. Вторая часть работы (коллекция SortedDictionary <K, T>)\n" +
-                    "3. Третья часть работы (коллекции первых двух частей)\n" +
+            Console.WriteLine("1. Первая часть работы (коллекция Queue <Animal>)\n" +
+                    "2. Вторая часть работы (коллекция SortedDictionary <int, Animal>)\n" +
+                    "3. Третья часть работы (коллекции первых двух частей)\n\n" +
                     "4. Завершить работу программы\n");
         }
 
         //выполнение основной части программы
-        static void Run(ref Queue<Animal> animalQueue)
+        static void Run(ref Queue<Animal> animalQueue, ref SortedDictionary<int, Animal> animalDict)
         {
             bool isRunning = true; //при false программа завершит работу
             do
@@ -32,6 +32,9 @@ namespace LabWork11
                 {
                     case 1:
                         FirstPart.FPMenu(ref animalQueue); //запуск первой части работы
+                        break;
+                    case 2:
+                        SecondPart.SPMenu(ref animalDict);
                         break;
                     case 4:
                         isRunning = false; //установка условия завершения программы
@@ -56,8 +59,9 @@ namespace LabWork11
         static void Main(string[] args)
         { 
             Queue<Animal> animalQueue = new Queue<Animal>(); //инициализация очереди для 1 части
+            SortedDictionary<int, Animal> animalDict = new SortedDictionary<int, Animal>(); //инициализация словаря для 2 части
             UserRecomendations(); //печать рекомендаций для пользователя
-            Run(ref animalQueue); //вызов метода Run(...), выполняющего основную часть программы
+            Run(ref animalQueue, ref animalDict); //вызов метода Run(...), выполняющего основную часть программы
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LabWork11
 {
-    //класс для работы с первой частью работы
+    //класс для реализации первой части работы
     public class FirstPart
     {
         /*константа - максимальная вместимость очереди;
@@ -17,23 +17,24 @@ namespace LabWork11
          */
         public const int MAX_CAPACITY = 100;
 
-        //печать основного меню первой части работа
+        //печать основного меню первой части работы
         public static void FPMainPage() //здесь и далее: FP - сокращение First Part
         {
             Console.WriteLine("\n1. Сформировать очередь из случайных объектов\n" +
-                "2. Вывести очередь на экран\n" +
+                "2. Вывести содержимое очереди на экран\n" +
                 "3. Добавить случайные элементы в очередь\n" +
                 "4. Извлечь и удалить элементы из очереди\n" +
                 "5. Запросы объектов определённого типа\n" +
                 "6. Самое старшее животное очереди\n" +
                 "7. Найти элемент в очереди\n" +
-                "8. Выполнить клонирование очереди\n\n" +
-                "9. Вернуться в главное меню\n");
+                "8. Выполнить клонирование очереди\n" +
+                "9. Очистить очередь\n\n" +
+                "10. Вернуться в главное меню\n");
 
         }
 
         //цветовая индикация заполненности очереди
-        public static void FPQueueCount(int count, string startMessage, string endMessage)
+        public static void ElementCounter(int count, string startMessage, string endMessage)
         {
             Console.Write(startMessage);
             switch (count)
@@ -58,15 +59,15 @@ namespace LabWork11
             bool isRunning = true;
             do
             {
-                Dialog.PrintHeader("Первая часть работы");
+                Dialog.PrintHeader("Первая часть работы (очередь)");
 
                 //максимальная ёмкость очереди - константа MAX_CAPACITY
                 Console.WriteLine($"Максимальная вместительность очереди - {MAX_CAPACITY}");
-                FPQueueCount(animalQueue.Count, "Очередь заполнена на ", $"/{MAX_CAPACITY}");
+                ElementCounter(animalQueue.Count, "Очередь заполнена на ", $"/{MAX_CAPACITY}");
                 Console.WriteLine();
 
                 FPMainPage(); //печать основного меню первой части
-                int choice = Dialog.EnterNumber("Выберите пункт меню:", 1, 9);
+                int choice = Dialog.EnterNumber("Выберите пункт меню:", 1, 10);
 
                 Console.WriteLine();
                 switch (choice)
@@ -95,7 +96,10 @@ namespace LabWork11
                     case 8:
                         CloneQueue(animalQueue);
                         break;
-                    case 9: //выход в самое первое меню
+                    case 9:
+                        ClearQueue(ref animalQueue);
+                        break;
+                    case 10: //выход в самое первое меню
                         isRunning = false;
                         break;
 
@@ -110,11 +114,12 @@ namespace LabWork11
         {
             Dialog.PrintHeader("Создание очереди с помощью ДСЧ");
             int length = Dialog.EnterNumber($"Введите длину очереди (до {MAX_CAPACITY}):", 0, MAX_CAPACITY);
-            Queue<Animal> animalQueue = new Queue<Animal>(length); //создание очереди заданной длины
-            FPMethods.AddRandomToQueue(ref animalQueue, length);
 
-            //обновляем инициализированную очередь
-            animals = new Queue<Animal>(animalQueue);
+            //очистить очередь
+            FPMethods.ClearQueue(ref animals);
+
+            //заполнение очереди объектами
+            FPMethods.AddRandomToQueue(ref animals, length);
             
             Console.WriteLine();
             switch (animals.Count)
@@ -137,26 +142,16 @@ namespace LabWork11
             Dialog.PrintHeader("Вывод очереди на печать");
             if (animals.Count == 0) //случай, если очередь пуста
             {
-                Console.WriteLine("Текущая очередь пуста");
+                Dialog.ColorText("Текущая очередь пуста", "green");
                 Dialog.BackMessage();
                 return;
             }
             Console.WriteLine($"Очередь состоит из {animals.Count} следующего(-их) элемента(-ов):\n");
-            //чтобы пользователь успел прочитать сообщение выше
-            if (animals.Count >= 22)
-            {
-                Console.WriteLine("Вывод объектов через...");
-                for (int i = 0; i <= 2; i++)
-                {
-                    Console.WriteLine(i+1);
-                    Thread.Sleep(1000);
-                }
-            }
             int elementNumber = 0;
             foreach(Animal animal in animals) //перебор объектов очереди
             {
                 elementNumber++;
-                FPQueueCount(elementNumber, $"Объект очереди № ", "");
+                ElementCounter(elementNumber, $"Объект очереди № ", "");
                 Console.Write(":\n\t");
                 animal.Show();
             }
@@ -195,7 +190,7 @@ namespace LabWork11
                         exludedAnimals[i] = animals.Dequeue();
                     }
 
-                    Dialog.ColorText($"Из очереди удален(-ы) следующие {elementAmount} элемент(-ов):\n", "green");
+                    Dialog.ColorText($"Из очереди удален(-ы) следующий(-е) {elementAmount} элемент(-ов):\n", "green");
                     foreach (Animal animal in exludedAnimals)
                     {
                         animal.Show();
@@ -211,7 +206,8 @@ namespace LabWork11
         public static void EnqueueElements(ref Queue<Animal> animals)
         {
             Dialog.PrintHeader("Добавление случайных объектов в конец очереди");
-            FPQueueCount(animals.Count, "Учтите, что очередь заполнена на ", $"/{MAX_CAPACITY}\n");
+            ElementCounter(animals.Count, "Учтите, что очередь заполнена на ", $"/{MAX_CAPACITY}\n");
+            Console.WriteLine("Если очередь заполнена на 100%, укажите значение 0\n");
             int elementAmount = Dialog.EnterNumber("Введите количество добавляемых объектов:", 0, MAX_CAPACITY - animals.Count);
             switch (elementAmount)
             {
@@ -246,7 +242,7 @@ namespace LabWork11
                 Dialog.PrintHeader("Объекты определённого типа");
                 Console.WriteLine("1. Млекопитающие (Mammal)\n" +
                     "2. Птицы (Bird)\n" +
-                    "3. Парнокопытные (Artiodactyl)\n" +
+                    "3. Парнокопытные (Artiodactyl)\n\n" +
                     "4. Назад\n");
                 int choice = Dialog.EnterNumber("Выберите один из типов:", 1, 4);
 
@@ -281,7 +277,7 @@ namespace LabWork11
         //самое старшее животное очереди
         public static void OldestRequest(Queue<Animal> animals)
         {
-            Dialog.PrintHeader("Объекты определённого типа");
+            Dialog.PrintHeader("самое старшее животное");
 
             if (animals.Count == 0)
             {
@@ -290,7 +286,7 @@ namespace LabWork11
                 return;
             }
 
-            Dialog.PrintHeader("Объекты определённого типа");
+            Dialog.PrintHeader("самое старшее животное");
             Animal animal = FPMethods.OldestAnimal(animals);
             Console.WriteLine("Животное с наибольшим возрастом в очереди:");
             animal.Show();
@@ -316,7 +312,7 @@ namespace LabWork11
                 var animalFind = new Animal();
                 Console.WriteLine("1. Млекопитающее (Mammal)\n" +
                     "2. Птица (Bird)\n" +
-                    "3. Парнокопытное (Artiodactyl)\n" +
+                    "3. Парнокопытное (Artiodactyl)\n\n" +
                     "4. Назад\n");
                 int choice = Dialog.EnterNumber("Выберите тип объекта, который будет найден:", 1, 4);
 
@@ -356,7 +352,7 @@ namespace LabWork11
 
                 if (!exist)
                 {
-                    Dialog.ColorText("Заданного элемента в массиве нет");
+                    Dialog.ColorText("Заданного элемента в очереди нет");
                     Dialog.BackMessage();
                     return;
                 }
@@ -400,8 +396,28 @@ namespace LabWork11
             {
                 animal.Show();
             }
-
             Dialog.BackMessage();
+            return;
+        }
+
+        //вызов метода по очистке очереди
+        public static void ClearQueue(ref Queue<Animal> animals)
+        {
+            Dialog.PrintHeader("Очистка очереди");
+
+            switch (animals.Count)
+            {
+                case 0: //случай, если очередь изначально пуста
+                    Dialog.ColorText("Очередь уже пуста, изменений не произошло", "green");
+                    break;
+                default:
+                    FPMethods.ClearQueue(ref animals);
+                    Dialog.ColorText("Очередь успешно очищена, все её объекты удалены", "green");
+                    break;
+            }
+            Dialog.BackMessage();
+            return;
+
         }
     }
 }
