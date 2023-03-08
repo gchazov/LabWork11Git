@@ -322,6 +322,15 @@ namespace LabWork11
                 return;
             }
 
+            if (animalDict.Count == 100)
+            {
+                //проверка на макс заполненность словаря
+                Dialog.ColorText("Клонирование проверить не получится! Необходимо, чтобы в очереди был" +
+                    "хотя бы одно свободное место под элемент");
+                Dialog.BackMessage();
+                return;
+            }
+
             //глубокое копирование исходной очереди
             SortedDictionary<int, Animal> clone = SPMethods.CloneDict(animalDict);
             Dialog.ColorText("Словарь-клон успешно создан", "green");

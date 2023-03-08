@@ -120,12 +120,20 @@ namespace AnimalLibrary
         {
             if (obj is Animal animal)
             {
-                return (this.Age == animal.Age
+                return this.Age == animal.Age
                     && String.Compare(this.Name, animal.Name) == 0
-                    && String.Compare(this.Habitat, animal.Habitat) == 0);
+                    && String.Compare(this.Habitat, animal.Habitat) == 0
+                    && this.id.number == animal.id.number;
             }
             else
                 return false;
+        }
+
+        public override int GetHashCode()
+        {
+            //для словаря (сортированного)
+            return Name.GetHashCode() + Age.GetHashCode() 
+                + Habitat.GetHashCode() + id.GetHashCode();
         }
 
         //метод поверхностного копирования
@@ -144,7 +152,13 @@ namespace AnimalLibrary
         {
             if (!(obj is Animal)) return -1;
             Animal animal = (Animal)obj;
-            return Name.CompareTo(animal.Name);
+            return id.number.CompareTo(animal.id.number);
+        }
+
+        //переопределение для использования в коллекции
+        public override string ToString()
+        {
+            return $"Животное: {Name}; Возраст: {Age}; Ареал обитания: {Habitat}; ID в зоопарке: {id}";
         }
 
     }

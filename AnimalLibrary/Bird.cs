@@ -11,11 +11,20 @@ namespace AnimalLibrary
     {
         protected bool flyAbility;
         protected string[] birdArray = { "Воробей", "Страус", "Пеликан", "Индюк",
-            "Петух", "Тукан", "Соловей", "Альбатрос", "Канарейка", "Коростель", "Попугай какаду"};
+            "Петух", "Тукан", "Соловей", "Альбатрос", "Канарейка", "Коростель", "Синица"};
         public bool FlyAbility
         {
             get { return flyAbility; }
             set { flyAbility = value; }
+        }
+
+        //возвращает объект базового класса
+        public Animal BaseAnimal
+        {
+            get
+            {
+                return new Animal(name, age, habitat, id.number);
+            }
         }
 
         //добавление поля "умение летать" к базовому конструктору
@@ -24,13 +33,7 @@ namespace AnimalLibrary
             flyAbility = true;
         }
 
-        /// <summary>
-        /// конструктор с параметрами
-        /// </summary>
-        /// <param name="name">название животного</param>
-        /// <param name="age">возраст</param>
-        /// <param name="habitat">место обитания</param>
-        /// <param name="flyAbility">умение летать</param>
+        //конструктор с параметрами
         public Bird(string name, int age, string habitat, bool flyAbility, int num)
             : base(name, age, habitat, num)
         {
@@ -61,12 +64,18 @@ namespace AnimalLibrary
         {
             if (obj is Bird bird)
             {
-                return (this.Age == bird.Age && this.FlyAbility == bird.FlyAbility
+                return this.Age == bird.Age && this.FlyAbility == bird.FlyAbility
                     && String.Compare(this.Name, bird.Name) == 0
-                    && String.Compare(this.Habitat, bird.Habitat) == 0);
+                    && String.Compare(this.Habitat, bird.Habitat) == 0;
             }
             else
                 return false;
+        }
+        public override int GetHashCode()
+        {
+            //для словаря (сортированного)
+            return Name.GetHashCode() + Age.GetHashCode()
+                + Habitat.GetHashCode() + id.GetHashCode() + FlyAbility.GetHashCode();
         }
 
         public new void Print()
@@ -90,5 +99,11 @@ namespace AnimalLibrary
         {
             return new Bird(Name, Age, Habitat, FlyAbility, id.number);
         }
+
+        public override string ToString()
+        {
+            return $"Птица: {Name}; Возраст: {Age}; Ареал обитания: {Habitat}; Умение летать: {FlyAbility}; ID в зоопарке: {id}";
+        }
+
     }
 }

@@ -128,6 +128,64 @@ namespace MethodTesting
             Assert.AreEqual(0, animals.Count);
         }
 
+        [TestMethod]
+        public void TestSort() //тест сортировки очереди по именам
+        {
+            Queue<Animal> animals = new();
+            Mammal m1 = new("кот", 1, "Bishkek", true, 1);
+            Bird b1 = new("птица планирует", 3, "что она планирует?", true, 2);
+            Artiodactyl a1 = new("собака", 19, "NYC", true, "sharp", 3);
+            //добавляем в хаотичном порядке
+            animals.Enqueue(b1);
+            animals.Enqueue(a1);
+            animals.Enqueue(m1);
+
+            animals.Clear();
+            //добавляем в отсорт. порядке
+            animals.Enqueue(m1);
+            animals.Enqueue(b1);
+            animals.Enqueue(a1);
+            Queue<Animal> sorted = FPMethods.Sort(animals);
+            Assert.IsTrue(sorted.SequenceEqual(animals));
+        }
+
+        [TestMethod]
+        public void TestFindObj1() //если объект не найден
+        {
+            Queue<Animal> animals = new();
+            Mammal m1 = new("кот", 1, "Bishkek", true, 1);
+            Bird b1 = new("птица планирует", 3, "что она планирует?", true, 2);
+            Artiodactyl a1 = new("собака", 19, "NYC", true, "sharp", 3);
+            //очередь изначально отсортирована
+            animals.Enqueue(m1);
+            animals.Enqueue(b1);
+            animals.Enqueue(a1);
+
+            Animal animalFind = new("козлик", 2, "егошихинское кладбище", 666);
+            var found = FPMethods.FindObj(animals, animalFind);
+            Assert.AreEqual(null, found);
+        }
+
+        [TestMethod]
+        public void TestFindObj2() //если объект найден
+        {
+            Queue<Animal> animals = new();
+            Mammal m1 = new("кот", 1, "Bishkek", true, 1);
+            Bird b1 = new("птица планирует", 3, "что она планирует?", true, 2);
+            Artiodactyl a1 = new("собака", 19, "NYC", true, "sharp", 3);
+            //очередь изначально отсортирована
+            animals.Enqueue(m1);
+            animals.Enqueue(b1);
+            animals.Enqueue(a1);
+
+            Mammal animalFind = new("кот", 1, "Bishkek", true, 1);
+            var found = FPMethods.FindObj(animals, animalFind);
+            Assert.AreEqual(m1, found);
+        }
+
+
+
+
 
     }
 }

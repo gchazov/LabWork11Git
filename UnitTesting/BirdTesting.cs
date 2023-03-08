@@ -55,7 +55,7 @@ namespace LibraryTesting
         {
             string[] habitatArray = { "Евразия", "Африка", "Австралия", "Южная Америка", "Антарктида", "Северная Америка" };
             string[] birdArray = { "Воробей", "Страус", "Пеликан", "Индюк",
-            "Петух", "Тукан", "Соловей", "Альбатрос", "Канарейка", "Коростель", "Попугай какаду"};
+            "Петух", "Тукан", "Соловей", "Альбатрос", "Канарейка", "Коростель", "Синица"};
             Bird actual = new Bird();
             actual.RandomInit();
             bool isCorrect = birdArray.Contains(actual.Name)
@@ -99,6 +99,23 @@ namespace LibraryTesting
             string bird1 = "Чайник";
             Bird bird2 = new Bird("Синичка", 2, "Пермь", false, 777);
             Assert.IsFalse(bird2.Equals(bird1));
+        }
+
+        [TestMethod]
+        public void TestBirdBaseAnimal() //тест получения объекта базового класса
+        {
+            Animal expected = new("петух", 2, "деревня", 1);
+            Bird bird = new("петух", 2, "деревня", false, 1);
+            Animal actual = bird.BaseAnimal;
+            Assert.AreEqual(actual, expected);
+        }
+
+        [TestMethod]
+        public void TestBirdShallowCopy() //тест получения поверхностной копии
+        {
+            Bird bird = new("петух", 2, "деревня", false, 1);
+            Bird copy = (Bird)bird.ShallowCopy();
+            Assert.AreEqual(bird, copy);
         }
     }
 }

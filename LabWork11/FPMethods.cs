@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -113,5 +114,33 @@ namespace LabWork11
             animals.Clear();
         }
 
+        //сортировка очереди по ID
+        public static Queue<Animal> Sort(Queue<Animal> animals)
+        {
+            ArrayList ar = new(animals);
+            ar.Sort();
+            
+            animals.Clear();
+            foreach (Animal item in ar)
+            {
+                animals.Enqueue(item);
+            }
+            return animals;
+        }
+
+        //поиск в отсортированной очереди
+        public static Animal? FindObj(Queue<Animal> animals, Animal objToFind)
+        {
+            ArrayList ar = new(animals);
+            ar.Sort();
+
+            int index = ar.BinarySearch(objToFind);
+            if (index < 0)
+            { //если не найдётся элемент
+                return null;
+            }
+            //возврат объекта, если значение найдено
+            return ar[index] as Animal;
+        }
     }
 }

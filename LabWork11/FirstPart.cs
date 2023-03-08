@@ -1,5 +1,6 @@
 ﻿using AnimalLibrary;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace LabWork11
                 "4. Извлечь и удалить элементы из очереди\n" +
                 "5. Запросы объектов определённого типа\n" +
                 "6. Самое старшее животное очереди\n" +
-                "7. Найти элемент в очереди\n" +
+                "7. Найти элемент в отсортированной очереди\n" +
                 "8. Выполнить клонирование очереди\n" +
                 "9. Очистить очередь\n\n" +
                 "10. Вернуться в главное меню\n");
@@ -88,7 +89,7 @@ namespace LabWork11
                         TypeRequests(animalQueue);
                         break;
                     case 6:
-                        OldestRequest(animalQueue);
+                        OldestRequest(ref animalQueue);
                         break;
                     case 7:
                         FindObject(animalQueue);
@@ -275,7 +276,7 @@ namespace LabWork11
         }
 
         //самое старшее животное очереди
-        public static void OldestRequest(Queue<Animal> animals)
+        public static void OldestRequest(ref Queue<Animal> animals)
         {
             Dialog.PrintHeader("самое старшее животное");
 
@@ -336,29 +337,22 @@ namespace LabWork11
                         break;
                 }
 
-                Console.WriteLine();
+                animals = FPMethods.Sort(animals);
+                Dialog.ColorText("\nОчередь отсортирована по ID\n", "green");
+
                 animalFind.Init(); //инициализация с клавиатуры
 
-                bool exist = false;
+                var found = FPMethods.FindObj(animals, animalFind);
 
-                foreach (Animal animal in animals)
+                if (found == null)
                 {
-                    if (animal.Equals(animalFind))
-                    {
-                        exist = true;
-                        break;
-                    }
-                }
-
-                if (!exist)
-                {
-                    Dialog.ColorText("Заданного элемента в очереди нет");
+                    Dialog.ColorText("\nЗаданного элемента в очереди нет");
                     Dialog.BackMessage();
                     return;
                 }
 
                 Dialog.ColorText("\nЗаданный элемент есть в очереди:\n", "green");
-                animalFind.Show();
+                found.Show();
                 Dialog.BackMessage();
                 return;
             } while (isRunning);

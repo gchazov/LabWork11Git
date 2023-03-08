@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Runtime.InteropServices;
 using AnimalLibrary;
 
 
@@ -19,7 +20,8 @@ namespace LabWork11
         }
 
         //выполнение основной части программы
-        static void Run(ref Queue<Animal> animalQueue, ref SortedDictionary<int, Animal> animalDict)
+        static void Run(ref Queue<Animal> animalQueue, ref SortedDictionary<int, Animal> animalDict,
+            ref TestCollections testCollections)
         {
             bool isRunning = true; //при false программа завершит работу
             do
@@ -35,6 +37,9 @@ namespace LabWork11
                         break;
                     case 2:
                         SecondPart.SPMenu(ref animalDict);
+                        break;
+                    case 3:
+                        ThirdPart.TPMenu(ref testCollections);
                         break;
                     case 4:
                         isRunning = false; //установка условия завершения программы
@@ -60,8 +65,9 @@ namespace LabWork11
         { 
             Queue<Animal> animalQueue = new Queue<Animal>(); //инициализация очереди для 1 части
             SortedDictionary<int, Animal> animalDict = new SortedDictionary<int, Animal>(); //инициализация словаря для 2 части
+            TestCollections testCollections = new TestCollections(); //инициализация коллекций для 3 части
             UserRecomendations(); //печать рекомендаций для пользователя
-            Run(ref animalQueue, ref animalDict); //вызов метода Run(...), выполняющего основную часть программы
+            Run(ref animalQueue, ref animalDict, ref testCollections); //вызов метода Run(...), выполняющего основную часть программы
         }
     }
 }
