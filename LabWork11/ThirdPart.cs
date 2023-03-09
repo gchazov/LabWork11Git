@@ -306,9 +306,9 @@ namespace LabWork11
 
             if (isIncluded)
             {
-                Dialog.ColorText($"Элемент найден в коллекции 1 (Queue <Bird>) за {Convert.ToInt32(TickWithoutZero(timer))} тиков", "green");
+                Dialog.ColorText($"Элемент найден в коллекции 1 (Queue <Bird>) за {timer.ElapsedTicks} тиков", "green");
             }
-            else Dialog.ColorText($"В коллекции 1 (Queue <Bird>) заданного элемента нет, затрачено времени: {Convert.ToInt32(TickWithoutZero(timer))}");
+            else Dialog.ColorText($"В коллекции 1 (Queue <Bird>) заданного элемента нет, затрачено времени: {timer.ElapsedTicks}");
 
             //поиск в коллекции 2 (очередь объектов типа string)
             timer.Restart();
@@ -317,9 +317,9 @@ namespace LabWork11
 
             if (isIncluded)
             {
-                Dialog.ColorText($"Элемент найден в коллекции 2 (Queue <string>) за {Convert.ToInt32(TickWithoutZero(timer))} тиков", "green");
+                Dialog.ColorText($"Элемент найден в коллекции 2 (Queue <string>) за {timer.ElapsedTicks} тиков", "green");
             }
-            else Dialog.ColorText($"В коллекции 2 (Queue <string>) заданного элемента нет, затрачено времени: {Convert.ToInt32(TickWithoutZero(timer))}");
+            else Dialog.ColorText($"В коллекции 2 (Queue <string>) заданного элемента нет, затрачено времени: {timer.ElapsedTicks}");
 
             //поиск в коллекции 3 (словарь в ключами типа Animal)
             timer.Restart();
@@ -328,9 +328,9 @@ namespace LabWork11
 
             if (isIncluded)
             {
-                Dialog.ColorText($"Элемент найден в коллекции 3 (SortedDictionary <Animal, Bird>) за {Convert.ToInt32(TickWithoutZero(timer))} тиков", "green");
+                Dialog.ColorText($"Элемент найден в коллекции 3 (SortedDictionary <Animal, Bird>) за {timer.ElapsedTicks} тиков", "green");
             }
-            else Dialog.ColorText($"В коллекции 3 (SortedDictionary <Animal, Bird>) заданного элемента нет, затрачено времени: {Convert.ToInt32(TickWithoutZero(timer))}");
+            else Dialog.ColorText($"В коллекции 3 (SortedDictionary <Animal, Bird>) заданного элемента нет, затрачено времени: {timer.ElapsedTicks}");
 
             //поиск в коллекции 4 (словарь в ключами типа string)
             timer.Restart();
@@ -339,28 +339,11 @@ namespace LabWork11
 
             if (isIncluded)
             {
-                Dialog.ColorText($"Элемент найден в коллекции 4 (SortedDictionary <string, Bird>) за {Convert.ToInt32(TickWithoutZero(timer))} тиков", "green");
+                Dialog.ColorText($"Элемент найден в коллекции 4 (SortedDictionary <string, Bird>) за {timer.ElapsedTicks} тиков", "green");
             }
-            else Dialog.ColorText($"В коллекции 4 (SortedDictionary <string, Bird>) заданного элемента нет, затрачено времени: {Convert.ToInt32(TickWithoutZero(timer))}");
+            else Dialog.ColorText($"В коллекции 4 (SortedDictionary <string, Bird>) заданного элемента нет, затрачено времени: {timer.ElapsedTicks}");
 
-        }
 
-        //отбрасывание незначащих нулей в таймере
-        public static string TickWithoutZero(Stopwatch timer)
-        {
-            string tick = timer.Elapsed.ToString();
-            int startIndex = 0;
-            for (int i = 0; i < tick.Length; i++)
-            {
-                if (char.IsNumber(tick, i) && tick[i] != '0')
-                {
-                    startIndex = i;
-                    break;
-                }
-            }
-            tick = tick.Substring(startIndex);
-            tick.Reverse();
-            return tick;
         }
     }
 }
