@@ -152,9 +152,11 @@ namespace LabWork11
         public static SortedDictionary<int, Animal> CloneDict(SortedDictionary<int, Animal> animalDict)
         {
             //используем ToDictionary() для создания клона
-            var cloneDict = animalDict.ToDictionary(
-                x => x.Key,
-                x => (Animal)x.Value.Clone());
+            var cloneDict = new Dictionary<int, Animal>();
+            foreach (KeyValuePair<int, Animal> animal in animalDict)
+            {
+                cloneDict.Add(animal.Key, (Animal)animal.Value.Clone());
+            }
             SortedDictionary<int, Animal> cloneSortDict = new(cloneDict);
             return cloneSortDict;
         }

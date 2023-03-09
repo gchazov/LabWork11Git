@@ -256,7 +256,7 @@ namespace LabWork11
                     "2. Элемент, расположенный в середине\n" +
                     "3. Последний элемент\n" +
                     "4. Несуществующий в коллекциях элемент\n\n" +
-                    "5. Назад");
+                    "5. Назад\n");
 
                 int choice = Dialog.EnterNumber("Выберите элемент для поиска (они представлены выше):", 1, 5);
                 if (choice == 5)
@@ -269,8 +269,8 @@ namespace LabWork11
                 Dialog.PrintHeader("Поиск элементов");
                 ElementSearch(choice, testCollections);
                 Dialog.BackMessage();
-                return;
             } while (isRunning);
+            return;
 
         }
 
@@ -302,11 +302,13 @@ namespace LabWork11
             bool isIncluded = testCollections.Collection1.Contains(objToFind);
             timer.Stop();
 
+
+
             if (isIncluded)
             {
-                Dialog.ColorText($"Элемент найден в коллекции 1 (Queue <Bird>) за {timer.Elapsed} мс", "green");
+                Dialog.ColorText($"Элемент найден в коллекции 1 (Queue <Bird>) за {Convert.ToInt32(TickWithoutZero(timer))} тиков", "green");
             }
-            else Dialog.ColorText($"В коллекции 1 (Queue <Bird>) заданного элемента нет, затрачено времени: {timer.Elapsed}");
+            else Dialog.ColorText($"В коллекции 1 (Queue <Bird>) заданного элемента нет, затрачено времени: {Convert.ToInt32(TickWithoutZero(timer))}");
 
             //поиск в коллекции 2 (очередь объектов типа string)
             timer.Restart();
@@ -315,9 +317,9 @@ namespace LabWork11
 
             if (isIncluded)
             {
-                Dialog.ColorText($"Элемент найден в коллекции 2 (Queue <string>) за {timer.Elapsed} мс", "green");
+                Dialog.ColorText($"Элемент найден в коллекции 2 (Queue <string>) за {Convert.ToInt32(TickWithoutZero(timer))} тиков", "green");
             }
-            else Dialog.ColorText($"В коллекции 2 (Queue <string>) заданного элемента нет, затрачено времени: {timer.Elapsed}");
+            else Dialog.ColorText($"В коллекции 2 (Queue <string>) заданного элемента нет, затрачено времени: {Convert.ToInt32(TickWithoutZero(timer))}");
 
             //поиск в коллекции 3 (словарь в ключами типа Animal)
             timer.Restart();
@@ -326,9 +328,9 @@ namespace LabWork11
 
             if (isIncluded)
             {
-                Dialog.ColorText($"Элемент найден в коллекции 3 (SortedDictionary <Animal, Bird>) за {timer.Elapsed} мс", "green");
+                Dialog.ColorText($"Элемент найден в коллекции 3 (SortedDictionary <Animal, Bird>) за {Convert.ToInt32(TickWithoutZero(timer))} тиков", "green");
             }
-            else Dialog.ColorText($"В коллекции 3 (SortedDictionary <Animal, Bird>) заданного элемента нет, затрачено времени: {timer.Elapsed}");
+            else Dialog.ColorText($"В коллекции 3 (SortedDictionary <Animal, Bird>) заданного элемента нет, затрачено времени: {Convert.ToInt32(TickWithoutZero(timer))}");
 
             //поиск в коллекции 4 (словарь в ключами типа string)
             timer.Restart();
@@ -337,10 +339,28 @@ namespace LabWork11
 
             if (isIncluded)
             {
-                Dialog.ColorText($"Элемент найден в коллекции 4 (SortedDictionary <string, Bird>) за {timer.Elapsed} мс", "green");
+                Dialog.ColorText($"Элемент найден в коллекции 4 (SortedDictionary <string, Bird>) за {Convert.ToInt32(TickWithoutZero(timer))} тиков", "green");
             }
-            else Dialog.ColorText($"В коллекции 4 (SortedDictionary <string, Bird>) заданного элемента нет, затрачено времени: {timer.Elapsed}");
+            else Dialog.ColorText($"В коллекции 4 (SortedDictionary <string, Bird>) заданного элемента нет, затрачено времени: {Convert.ToInt32(TickWithoutZero(timer))}");
 
+        }
+
+        //отбрасывание незначащих нулей в таймере
+        public static string TickWithoutZero(Stopwatch timer)
+        {
+            string tick = timer.Elapsed.ToString();
+            int startIndex = 0;
+            for (int i = 0; i < tick.Length; i++)
+            {
+                if (char.IsNumber(tick, i) && tick[i] != '0')
+                {
+                    startIndex = i;
+                    break;
+                }
+            }
+            tick = tick.Substring(startIndex);
+            tick.Reverse();
+            return tick;
         }
     }
 }
