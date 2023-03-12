@@ -295,55 +295,17 @@ namespace LabWork11
                     break;
             }
 
-            Stopwatch timer = new(); //создание таймера для засекания времени
+            //добавление в делегат указателей на методы
+            TimeDelegate timeDelegate = TPMethods.TimeCollection1;
+            timeDelegate += TPMethods.TimeCollection2;
+            timeDelegate += TPMethods.TimeCollection3;
+            timeDelegate += TPMethods.TimeCollection4;
 
-            //поиск в коллекции 1 (очередь объектов типа Bird)
-            timer.Start();
-            bool isIncluded = testCollections.Collection1.Contains(objToFind);
-            timer.Stop();
-
-
-
-            if (isIncluded)
-            {
-                Dialog.ColorText($"Элемент найден в коллекции 1 (Queue <Bird>) за {timer.ElapsedTicks} тиков", "green");
-            }
-            else Dialog.ColorText($"В коллекции 1 (Queue <Bird>) заданного элемента нет, затрачено времени: {timer.ElapsedTicks}");
-
-            //поиск в коллекции 2 (очередь объектов типа string)
-            timer.Restart();
-            isIncluded = testCollections.Collection2.Contains(objToFind.ToString());
-            timer.Stop();
-
-            if (isIncluded)
-            {
-                Dialog.ColorText($"Элемент найден в коллекции 2 (Queue <string>) за {timer.ElapsedTicks} тиков", "green");
-            }
-            else Dialog.ColorText($"В коллекции 2 (Queue <string>) заданного элемента нет, затрачено времени: {timer.ElapsedTicks}");
-
-            //поиск в коллекции 3 (словарь в ключами типа Animal)
-            timer.Restart();
-            isIncluded = testCollections.Collection3.ContainsKey(objToFind.BaseAnimal);
-            timer.Stop();
-
-            if (isIncluded)
-            {
-                Dialog.ColorText($"Элемент найден в коллекции 3 (SortedDictionary <Animal, Bird>) за {timer.ElapsedTicks} тиков", "green");
-            }
-            else Dialog.ColorText($"В коллекции 3 (SortedDictionary <Animal, Bird>) заданного элемента нет, затрачено времени: {timer.ElapsedTicks}");
-
-            //поиск в коллекции 4 (словарь в ключами типа string)
-            timer.Restart();
-            isIncluded = testCollections.Collection3.ContainsKey(objToFind.BaseAnimal);
-            timer.Stop();
-
-            if (isIncluded)
-            {
-                Dialog.ColorText($"Элемент найден в коллекции 4 (SortedDictionary <string, Bird>) за {timer.ElapsedTicks} тиков", "green");
-            }
-            else Dialog.ColorText($"В коллекции 4 (SortedDictionary <string, Bird>) заданного элемента нет, затрачено времени: {timer.ElapsedTicks}");
-
-
+            //вызов делегата
+            timeDelegate.Invoke(testCollections, objToFind);
         }
+
+        //определение сигнатуры делегата
+        public delegate long TimeDelegate(TestCollections testCollections, Bird objToFind);
     }
 }
